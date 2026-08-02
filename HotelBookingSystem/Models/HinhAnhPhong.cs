@@ -1,15 +1,23 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class HinhAnhPhong
+namespace HotelBookingSystem.Models
 {
-    [Key]
-    public int MaHinhAnh { get; set; }
+    public class HinhAnhPhong
+    {
+        [Key]
+        public int MaHinhAnh { get; set; }
 
-    public int MaPhong { get; set; }
+        [Required]
+        public int MaPhong { get; set; }
 
-    public string DuongDanAnh { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Đường dẫn ảnh không được để trống.")]
+        [StringLength(255)]
+        [Display(Name = "Đường dẫn ảnh")]
+        public string DuongDanAnh { get; set; } = string.Empty;
 
-    [ForeignKey(nameof(MaPhong))]
-    public Phong? Phong { get; set; }
+        // Navigation Property
+        [ForeignKey(nameof(MaPhong))]
+        public Phong? Phong { get; set; }
+    }
 }

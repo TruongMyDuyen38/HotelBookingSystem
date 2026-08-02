@@ -1,26 +1,43 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class ChiTietDatPhong
+namespace HotelBookingSystem.Models
 {
-    [Key]
-    public int MaChiTiet { get; set; }
+    public class ChiTietDatPhong
+    {
+        [Key]
+        public int MaChiTiet { get; set; }
 
-    public int MaDatPhong { get; set; }
+        [Required]
+        public int MaDatPhong { get; set; }
 
-    public int MaPhong { get; set; }
+        [Required]
+        public int MaPhong { get; set; }
 
-    public DateTime NgayNhanPhong { get; set; }
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Ngày nhận phòng")]
+        public DateTime NgayNhanPhong { get; set; }
 
-    public DateTime NgayTraPhong { get; set; }
+        [Required]
+        [DataType(DataType.Date)]
+        [Display(Name = "Ngày trả phòng")]
+        public DateTime NgayTraPhong { get; set; }
 
-    public int SoNguoi { get; set; }
+        [Range(1, 20, ErrorMessage = "Số người phải từ 1 đến 20.")]
+        [Display(Name = "Số người")]
+        public int SoNguoi { get; set; }
 
-    public decimal DonGia { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
+        [Range(0, double.MaxValue, ErrorMessage = "Đơn giá phải lớn hơn hoặc bằng 0.")]
+        [Display(Name = "Đơn giá")]
+        public decimal DonGia { get; set; }
 
-    [ForeignKey(nameof(MaDatPhong))]
-    public DatPhong? DatPhong { get; set; }
+        // Navigation Property
+        [ForeignKey(nameof(MaDatPhong))]
+        public DatPhong? DatPhong { get; set; }
 
-    [ForeignKey(nameof(MaPhong))]
-    public Phong? Phong { get; set; }
+        [ForeignKey(nameof(MaPhong))]
+        public Phong? Phong { get; set; }
+    }
 }

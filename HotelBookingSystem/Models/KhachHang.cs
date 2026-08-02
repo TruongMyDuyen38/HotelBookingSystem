@@ -1,27 +1,36 @@
-﻿using HotelBookingSystem.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class KhachHang
+namespace HotelBookingSystem.Models
 {
-    [Key]
-    public int MaKhachHang { get; set; }
+    public class KhachHang
+    {
+        [Key]
+        public int MaKhachHang { get; set; }
 
-    public int MaTaiKhoan { get; set; }
+        [Required]
+        public int MaTaiKhoan { get; set; }
 
-    [Required]
-    [StringLength(100)]
-    public string HoTen { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Họ tên không được để trống.")]
+        [StringLength(100)]
+        [Display(Name = "Họ và tên")]
+        public string HoTen { get; set; } = string.Empty;
 
-    [Required]
-    [EmailAddress]
-    public string Email { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Email không được để trống.")]
+        [EmailAddress(ErrorMessage = "Email không đúng định dạng.")]
+        [StringLength(100)]
+        [Display(Name = "Email")]
+        public string Email { get; set; } = string.Empty;
 
-    [StringLength(15)]
-    public string? SoDienThoai { get; set; }
+        [Phone(ErrorMessage = "Số điện thoại không hợp lệ.")]
+        [StringLength(15)]
+        [Display(Name = "Số điện thoại")]
+        public string? SoDienThoai { get; set; }
 
-    [ForeignKey(nameof(MaTaiKhoan))]
-    public TaiKhoan? TaiKhoan { get; set; }
+        // Navigation Property
+        [ForeignKey(nameof(MaTaiKhoan))]
+        public TaiKhoan? TaiKhoan { get; set; }
 
-    public ICollection<DatPhong> DatPhongs { get; set; } = new List<DatPhong>();
+        public ICollection<DatPhong> DatPhongs { get; set; } = new List<DatPhong>();
+    }
 }

@@ -1,30 +1,44 @@
-﻿using HotelBookingSystem.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-public class Phong
+namespace HotelBookingSystem.Models
 {
-    [Key]
-    public int MaPhong { get; set; }
+    public class Phong
+    {
+        [Key]
+        public int MaPhong { get; set; }
 
-    public string SoPhong { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Số phòng không được để trống.")]
+        [StringLength(10)]
+        public string SoPhong { get; set; } = string.Empty;
 
-    public string TenPhong { get; set; } = string.Empty;
+        [Required(ErrorMessage = "Tên phòng không được để trống.")]
+        [StringLength(100)]
+        public string TenPhong { get; set; } = string.Empty;
 
-    public int MaLoaiPhong { get; set; }
+        [Required]
+        public int MaLoaiPhong { get; set; }
 
-    public decimal GiaMotDem { get; set; }
+        [Column(TypeName = "decimal(18,2)")]
+        [Range(0, double.MaxValue)]
+        public decimal GiaMotDem { get; set; }
 
-    public int SucChua { get; set; }
+        [Range(1, 20)]
+        public int SucChua { get; set; }
 
-    public string? MoTa { get; set; }
+        [StringLength(500)]
+        public string? MoTa { get; set; }
 
-    public string TrangThai { get; set; } = string.Empty;
+        [Required]
+        [StringLength(30)]
+        public string TrangThai { get; set; } = string.Empty;
 
-    [ForeignKey(nameof(MaLoaiPhong))]
-    public LoaiPhong? LoaiPhong { get; set; }
+        // Navigation Property
+        [ForeignKey(nameof(MaLoaiPhong))]
+        public LoaiPhong? LoaiPhong { get; set; }
 
-    public ICollection<HinhAnhPhong> HinhAnhPhongs { get; set; } = new List<HinhAnhPhong>();
+        public ICollection<HinhAnhPhong> HinhAnhPhongs { get; set; } = new List<HinhAnhPhong>();
 
-    public ICollection<ChiTietDatPhong> ChiTietDatPhongs { get; set; } = new List<ChiTietDatPhong>();
+        public ICollection<ChiTietDatPhong> ChiTietDatPhongs { get; set; } = new List<ChiTietDatPhong>();
+    }
 }
