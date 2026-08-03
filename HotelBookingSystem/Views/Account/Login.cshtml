@@ -1,0 +1,31 @@
+﻿@model HotelBookingSystem.Models.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Đăng Nhập";
+}
+<h2>Đăng Nhập Tài Khoản</h2>
+<form asp-controller="Account" asp-action="Login" method="post">
+    <div asp-validation-summary="ModelOnly"
+         class="text-danger">
+    </div>
+    <div class="mb-3">
+        <label asp-for="TenDangNhap" class="form-label"></label>
+
+        <input asp-for="TenDangNhap" class="form-control" />
+
+        <span asp-validation-for="TenDangNhap" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="MatKhau" class="form-label"></label>
+
+        <input asp-for="MatKhau" class="form-control"/>
+        <span asp-validation-for="MatKhau" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">
+        Đăng Nhập
+    </button>
+</form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
