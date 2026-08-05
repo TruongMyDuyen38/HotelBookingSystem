@@ -1,0 +1,36 @@
+﻿@model HotelBookingSystem.Models.LoaiPhong
+
+@{
+    ViewData["Title"] = "Thêm loại phòng";
+}
+
+<h2>Thêm loại phòng</h2>
+<form asp-action="Create" method="post">
+
+    <div class="mb-3">
+        <label asp-for="TenLoaiPhong" class="form-label"></label>
+
+        <input asp-for="TenLoaiPhong"class="form-control" />
+
+        <span asp-validation-for="TenLoaiPhong" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="GiaCoBan"class="form-label"></label>
+
+        <input asp-for="GiaCoBan" class="form-control" />
+
+        <span asp-validation-for="GiaCoBan" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="MoTa"class="form-label"></label>
+
+        <textarea asp-for="MoTa" class="form-control"></textarea>
+        <span asp-validation-for="MoTa" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">
+        Thêm
+    </button>
+    <a asp-action="Index" class="btn btn-secondary">
+        Quay lại
+    </a>
+</form>
