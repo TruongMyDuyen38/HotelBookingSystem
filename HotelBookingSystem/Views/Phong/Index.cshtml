@@ -1,0 +1,53 @@
+﻿@model IEnumerable<HotelBookingSystem.Models.Phong>
+@{
+	ViewData["Title"] = "Danh sách phòng";
+}
+<h2>Danh sách phòng</h2>
+<p>
+    <a asp-action="Create" class="btn btn-primary">
+        + Thêm phòng
+    </a>
+</p>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Số phòng</th>
+            <th>Tên phòng</th>
+            <th>Loại phòng</th>
+            <th>Giá/đêm</th>
+            <th>Sức chứa</th>
+            <th>Trạng thái</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.SoPhong</td>
+                <td>@item.TenPhong</td>
+                <td>@item.LoaiPhong?.TenLoaiPhong</td>
+                <td>@item.GiaMotDem.ToString("N0")</td>
+                <td>@item.SucChua</td>
+                <td>@item.TrangThai</td>
+                <td>
+                    <a asp-action="Edit"
+                           asp-route-id="@item.MaPhong"
+                           class="btn btn-warning btn-sm">
+                        Sửa
+                    </a>
+                    <a asp-action="Delete"
+                           asp-route-id="@item.MaPhong"
+                           class="btn btn-danger btn-sm">
+                        Xóa
+                    </a>
+                        <a asp-action="Details"
+                               asp-route-id="@item.MaPhong"
+                               class="btn btn-info btn-sm">
+                            Chi Tiết
+                        </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
