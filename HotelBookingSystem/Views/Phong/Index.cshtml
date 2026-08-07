@@ -41,11 +41,16 @@
                            class="btn btn-danger btn-sm">
                         Xóa
                     </a>
-                        <a asp-action="Details"
-                               asp-route-id="@item.MaPhong"
-                               class="btn btn-info btn-sm">
-                            Chi Tiết
-                        </a>
+                    <a asp-action="Details"
+                           asp-route-id="@item.MaPhong"
+                           class="btn btn-info btn-sm">
+                        Chi Tiết
+                    </a>
+                    <a asp-action="Images"
+                           asp-route-id="@item.MaPhong"
+                           class="btn btn-success btn-sm">
+                        Hình ảnh
+                    </a>
                 </td>
             </tr>
         }

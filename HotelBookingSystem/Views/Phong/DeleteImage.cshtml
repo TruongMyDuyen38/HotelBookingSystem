@@ -1,0 +1,36 @@
+﻿@model HotelBookingSystem.Models.HinhAnhPhong
+
+@{
+    ViewData["Title"] = "Xóa hình ảnh";
+}
+
+<h2>Xóa hình ảnh</h2>
+
+<p class="text-danger fw-bold">
+    Bạn có chắc muốn xóa hình ảnh này?
+</p>
+
+<div class="card my-3">
+    <div class="card-body text-center">
+        <img src="@Model.DuongDanAnh"
+             class="img-fluid"
+             style="max-width:400px;"
+             alt="Hình ảnh phòng" />
+    </div>
+</div>
+
+<form asp-action="DeleteImage" method="post">
+
+    <input type="hidden" asp-for="MaHinhAnh" />
+
+    <button type="submit" class="btn btn-danger">
+        Xóa
+    </button>
+
+    <a asp-action="Images"
+           asp-route-id="@Model.MaPhong"
+           class="btn btn-secondary">
+        Quay lại
+    </a>
+
+</form>

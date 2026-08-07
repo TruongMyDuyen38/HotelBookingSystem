@@ -1,0 +1,71 @@
+﻿@model HotelBookingSystem.Models.ViewModels.PhongHinhAnhViewModel
+
+@{
+    ViewData["Title"] = "Quản lý hình ảnh phòng";
+}
+
+<h2>Quản lý hình ảnh phòng</h2>
+
+<div class="card my-3">
+    <div class="card-body">
+        <p><strong>Số phòng:</strong> @Model.Phong.SoPhong</p>
+        <p><strong>Tên phòng:</strong> @Model.Phong.TenPhong</p>
+        <p><strong>Loại phòng:</strong> @Model.Phong.LoaiPhong?.TenLoaiPhong</p>
+    </div>
+</div>
+
+<form asp-action="UploadImage"
+      asp-route-id="@Model.Phong.MaPhong"
+      method="post"
+      enctype="multipart/form-data">
+
+    <div class="mb-3">
+        <label class="form-label">Chọn hình ảnh</label>
+
+        <input type="file"
+               name="imageFile"
+               class="form-control"
+               accept="image/*" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Upload
+    </button>
+</form>
+
+<hr />
+
+@if (Model.DanhSachAnh.Any())
+{
+    <div class="row">
+        @foreach (var item in Model.DanhSachAnh)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <img src="@item.DuongDanAnh"
+                         class="card-img-top"
+                         style="height:220px; object-fit:cover;"
+                         alt="Hình ảnh phòng" />
+
+                    <a asp-action="DeleteImage"
+                           asp-route-id="@item.MaHinhAnh"
+                           class="btn btn-danger btn-sm">
+                        Xóa
+                    </a>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        Chưa có hình ảnh nào cho phòng này.
+    </div>
+}
+
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">
+        Quay lại
+    </a>
+</div>
