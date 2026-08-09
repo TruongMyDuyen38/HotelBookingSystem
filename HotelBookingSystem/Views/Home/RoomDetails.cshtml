@@ -1,0 +1,82 @@
+﻿@model HotelBookingSystem.Models.ViewModels.PhongHinhAnhViewModel
+
+@{
+    ViewData["Title"] = "Chi tiết phòng";
+}
+
+<h2>Chi tiết phòng</h2>
+
+<div class="card my-3">
+    <div class="card-body">
+
+        <h4>@Model.Phong.TenPhong</h4>
+
+        <p>
+            <strong>Số phòng:</strong>
+            @Model.Phong.SoPhong
+        </p>
+
+        <p>
+            <strong>Loại phòng:</strong>
+            @Model.Phong.LoaiPhong?.TenLoaiPhong
+        </p>
+
+        <p>
+            <strong>Giá một đêm:</strong>
+            @Model.Phong.GiaMotDem.ToString("N0") VNĐ
+        </p>
+
+        <p>
+            <strong>Sức chứa:</strong>
+            @Model.Phong.SucChua người
+        </p>
+
+        <p>
+            <strong>Mô tả:</strong>
+            @Model.Phong.MoTa
+        </p>
+
+        <p>
+            <strong>Trạng thái:</strong>
+            @Model.Phong.TrangThai
+        </p>
+
+    </div>
+</div>
+
+<hr />
+
+<h4>Hình ảnh phòng</h4>
+
+@if (Model.DanhSachAnh != null && Model.DanhSachAnh.Any())
+{
+    <div class="row">
+
+        @foreach (var item in Model.DanhSachAnh)
+        {
+            <div class="col-md-4 mb-3">
+
+                <div class="card">
+                    <img src="@item.DuongDanAnh"
+                         class="card-img-top"
+                         style="height:220px; object-fit:cover;"
+                         alt="Hình ảnh phòng" />
+                </div>
+
+            </div>
+        }
+
+    </div>
+}
+else
+{
+    <p class="text-muted">
+        Phòng này chưa có hình ảnh.
+    </p>
+}
+
+<hr />
+
+<a asp-action="Rooms" class="btn btn-secondary">
+    Quay lại danh sách phòng
+</a>

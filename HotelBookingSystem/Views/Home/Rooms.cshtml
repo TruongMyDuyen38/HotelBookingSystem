@@ -1,0 +1,53 @@
+﻿@model IEnumerable<HotelBookingSystem.Models.Phong>
+
+@{
+    ViewData["Title"] = "Danh sách phòng";
+}
+<h2>Danh sách phòng</h2>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+
+                <div class="card-body">
+                    <h5 class="card-title">
+                        @item.TenPhong
+                    </h5>
+
+                    <p class="card-text">
+                        <strong>Số phòng:</strong> @item.SoPhong
+                    </p>
+
+                    <p class="card-text">
+                        <strong>Loại phòng:</strong>
+                        @item.LoaiPhong?.TenLoaiPhong
+                    </p>
+
+                    <p class="card-text">
+                        <strong>Giá:</strong>
+                        @item.GiaMotDem.ToString("N0") VNĐ
+                    </p>
+
+                    <p class="card-text">
+                        <strong>Sức chứa:</strong>
+                        @item.SucChua người
+                    </p>
+
+                    <p class="card-text">
+                        <strong>Trạng thái:</strong>
+                        @item.TrangThai
+                    </p>
+
+                    <a asp-action="RoomDetails"
+                           asp-route-id="@item.MaPhong"
+                           class="btn btn-primary">
+                        Xem chi tiết
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    }
+</div>

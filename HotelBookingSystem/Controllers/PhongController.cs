@@ -152,7 +152,7 @@ namespace HotelBookingSystem.Controllers
 
             return View(viewModel);
         }
-        //GET: /Images
+        //GET: /Phong/Images
         [HttpGet]
         public IActionResult Images(int id)
         {
@@ -180,13 +180,13 @@ namespace HotelBookingSystem.Controllers
         [HttpPost]
         public IActionResult UploadImage(int id, IFormFile imageFile)
         {
-            // 1. Kiểm tra file
+            
             if (imageFile == null || imageFile.Length == 0)
             {
                 return RedirectToAction("Images", new { id });
             }
 
-            // 2. Tạo đường dẫn thư mục
+            //  Tạo đường dẫn thư mục
             var folderPath = Path.Combine(
                 _environment.WebRootPath,
                 "images",
