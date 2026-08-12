@@ -1,0 +1,104 @@
+﻿@model HotelBookingSystem.Models.ViewModels.DatPhongViewModel
+
+@{
+    ViewData["Title"] = "Đặt phòng";
+}
+
+<h2>Đặt phòng</h2>
+<div asp-validation-summary="All" class="text-danger"></div>
+<div class="card mb-4">
+    <div class="card-body">
+        <h4>@Model.Phong.TenPhong</h4>
+
+        <p>
+            <strong>Số phòng:</strong>
+            @Model.Phong.SoPhong
+        </p>
+
+        <p>
+            <strong>Loại phòng:</strong>
+            @Model.Phong.LoaiPhong?.TenLoaiPhong
+        </p>
+
+        <p>
+            <strong>Giá một đêm:</strong>
+            @Model.Phong.GiaMotDem.ToString("N0") VNĐ
+        </p>
+    </div>
+</div>
+
+<form asp-action="Booking" method="post">
+
+    <input type="hidden"
+           name="MaPhong"
+           value="@Model.Phong.MaPhong" />
+
+    <div class="mb-3">
+        <label asp-for="NgayNhanPhong" class="form-label">
+            Ngày nhận phòng
+        </label>
+
+        <input asp-for="NgayNhanPhong"
+               type="date"
+               class="form-control" />
+
+        <span asp-validation-for="NgayNhanPhong"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="NgayTraPhong" class="form-label">
+            Ngày trả phòng
+        </label>
+
+        <input asp-for="NgayTraPhong"
+               type="date"
+               class="form-control" />
+
+        <span asp-validation-for="NgayTraPhong"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="SoNguoi" class="form-label">
+            Số người
+        </label>
+
+        <input asp-for="SoNguoi"
+               type="number"
+               min="1"
+               max="@Model.Phong.SucChua"
+               class="form-control" />
+
+        <span asp-validation-for="SoNguoi"
+              class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="GhiChu" class="form-label">
+            Ghi chú
+        </label>
+
+        <textarea asp-for="GhiChu"
+                  class="form-control"
+                  rows="3"></textarea>
+
+        <span asp-validation-for="GhiChu"
+              class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Xác nhận đặt phòng
+    </button>
+
+    <a asp-action="RoomDetails"
+           asp-route-id="@Model.Phong.MaPhong"
+           class="btn btn-secondary">
+        Quay lại
+    </a>
+
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

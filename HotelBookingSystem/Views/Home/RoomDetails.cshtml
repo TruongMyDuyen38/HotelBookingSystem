@@ -40,6 +40,20 @@
             <strong>Trạng thái:</strong>
             @Model.Phong.TrangThai
         </p>
+        @if (Model.Phong.TrangThai == "Trống")
+        {
+            <a asp-action="Booking"
+                   asp-route-id="@Model.Phong.MaPhong"
+                   class="btn btn-primary">
+                Đặt phòng
+            </a>
+        }
+        else
+        {
+            <button class="btn btn-secondary" disabled>
+                Phòng đã được đặt
+            </button>
+        }
 
     </div>
 </div>

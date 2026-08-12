@@ -1,0 +1,121 @@
+﻿@model IEnumerable<HotelBookingSystem.Models.DatPhong>
+
+@{
+    ViewData["Title"] = "Lịch sử đặt phòng";
+}
+
+<h1>Lịch sử đặt phòng</h1>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["Success"]
+    </div>
+}
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+@if (Model.Any())
+{
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+
+            <thead>
+                <tr>
+                    <th>Mã đặt phòng</th>
+                    <th>Phòng</th>
+                    <th>Ngày đặt</th>
+                    <th>Ngày nhận</th>
+                    <th>Ngày trả</th>
+                    <th>Số người</th>
+                    <th>Tổng tiền</th>
+                    <th>Trạng thái</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    @foreach (var chiTiet in item.ChiTietDatPhongs)
+                    {
+                        <tr>
+                            <td>
+                                @item.MaDatPhong
+                            </td>
+
+                            <td>
+                                @chiTiet.Phong?.TenPhong
+                                <br />
+                                <small>
+                                    Phòng @chiTiet.Phong?.SoPhong
+                                </small>
+                            </td>
+
+                            <td>
+                                @item.NgayDat.ToString("dd/MM/yyyy HH:mm")
+                            </td>
+
+                            <td>
+                                @chiTiet.NgayNhanPhong.ToString("dd/MM/yyyy")
+                            </td>
+
+                            <td>
+                                @chiTiet.NgayTraPhong.ToString("dd/MM/yyyy")
+                            </td>
+
+                            <td>
+                                @chiTiet.SoNguoi
+                            </td>
+
+                            <td>
+                                @item.TongTien.ToString("N0") VNĐ
+                            </td>
+
+                            <td>
+                                @item.TrangThai
+
+                                @if (item.TrangThai == "Chờ xác nhận")
+                                {
+                                    <form asp-action="CancelBooking"
+                                          method="post"
+                                          class="mt-2"
+                                          onsubmit="return confirm('Bạn có chắc muốn hủy đặt phòng này không?');">
+
+                                        <input type="hidden"
+                                               name="id"
+                                               value="@item.MaDatPhong" />
+
+                                        <button type="submit"
+                                                class="btn btn-sm btn-danger">
+                                            Hủy đặt phòng
+                                        </button>
+
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                }
+
+            </tbody>
+
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert alert-info">
+        Bạn chưa có đơn đặt phòng nào.
+    </div>
+}
+
+<a asp-action="Rooms"
+       class="btn btn-primary">
+    Xem danh sách phòng
+</a>
