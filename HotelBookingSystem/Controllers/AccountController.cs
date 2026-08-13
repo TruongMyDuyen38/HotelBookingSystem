@@ -2,9 +2,10 @@
 using HotelBookingSystem.Models;
 using HotelBookingSystem.Models.ViewModels;
 using Microsoft.AspNetCore.Authentication;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace HotelBookingSystem.Controllers
 {
@@ -142,6 +143,77 @@ namespace HotelBookingSystem.Controllers
                 CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction("Login");
+        }
+        // GET: /Account/Profile
+        [HttpGet]
+        public IActionResult Profile()
+        {
+            if (!User.Identity?.IsAuthenticated ?? true)
+            {
+                return RedirectToAction("Login");
+            }
+
+            int maTaiKhoan = int.Parse(
+                User.FindFirstValue(ClaimTypes.NameIdentifier)!
+            );
+
+            var khachHang = _context.KhachHangs
+                .Include(k => k.TaiKhoan)
+                .FirstOrDefault(k => k.MaTaiKhoan == maTaiKhoan);
+
+            if (khachHang == null)
+            {
+                return NotFound();
+            }
+
+            var model = new ProfileViewModel
+            {
+                MaKhachHang = khachHang.MaKhachHang,
+                HoTen = khachHang.HoTen,
+                Email = khachHang.Email,
+                SoDienThoai = khachHang.SoDienThoai,
+                TenDangNhap = khachHang.TaiKhoan?.TenDangNhap ?? ""
+            };
+
+            return View(model);
+        }
+        // POST: /Account/Profile
+        [HttpPost]
+        public IActionResult Profile(ProfileViewModel model)
+        {
+            if (!User.Identity?.IsAuthenticated ?? true)
+            {
+                return RedirectToAction("Login");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            int maTaiKhoan = int.Parse(
+                User.FindFirstValue(ClaimTypes.NameIdentifier)!
+            );
+
+            var khachHang = _context.KhachHangs
+                .FirstOrDefault(k =>
+                    k.MaKhachHang == model.MaKhachHang &&
+                    k.MaTaiKhoan == maTaiKhoan);
+
+            if (khachHang == null)
+            {
+                return NotFound();
+            }
+
+            khachHang.HoTen = model.HoTen;
+            khachHang.Email = model.Email;
+            khachHang.SoDienThoai = model.SoDienThoai;
+
+            _context.SaveChanges();
+
+            TempData["Success"] = "Cập nhật thông tin thành công.";
+
+            return RedirectToAction("Profile");
         }
     }
 }
