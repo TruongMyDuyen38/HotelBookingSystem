@@ -1,0 +1,104 @@
+﻿@model IEnumerable<HotelBookingSystem.Models.DatPhong>
+
+@{
+    ViewData["Title"] = "Quản lý đặt phòng";
+}
+
+<h2>Quản lý đặt phòng</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Mã đặt phòng</th>
+            <th>Khách hàng</th>
+            <th>Phòng</th>
+            <th>Ngày đặt</th>
+            <th>Ngày nhận</th>
+            <th>Ngày trả</th>
+            <th>Tổng tiền</th>
+            <th>Trạng thái</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            foreach (var chiTiet in item.ChiTietDatPhongs)
+            {
+                <tr>
+                    <td>@item.MaDatPhong</td>
+
+                    <td>
+                        @item.KhachHang?.HoTen
+                    </td>
+
+                    <td>
+                        @chiTiet.Phong?.TenPhong
+                        <br />
+                        <small>
+                            Phòng @chiTiet.Phong?.SoPhong
+                        </small>
+                    </td>
+
+                    <td>
+                        @item.NgayDat.ToString("dd/MM/yyyy HH:mm")
+                    </td>
+
+                    <td>
+                        @chiTiet.NgayNhanPhong.ToString("dd/MM/yyyy")
+                    </td>
+
+                    <td>
+                        @chiTiet.NgayTraPhong.ToString("dd/MM/yyyy")
+                    </td>
+
+                    <td>
+                        @item.TongTien.ToString("N0") VNĐ
+                    </td>
+
+                    <td>
+                        @item.TrangThai
+
+                        @if (item.TrangThai == "Chờ xác nhận")
+                        {
+                            <div class="mt-2">
+
+                                <form asp-action="Confirm"
+                                      method="post"
+                                      class="d-inline">
+
+                                    <input type="hidden"
+                                           name="id"
+                                           value="@item.MaDatPhong" />
+
+                                    <button type="submit"
+                                            class="btn btn-sm btn-success">
+                                        Xác nhận
+                                    </button>
+
+                                </form>
+
+                                <form asp-action="Cancel"
+                                      method="post"
+                                      class="d-inline"
+                                      onsubmit="return confirm('Bạn có chắc muốn hủy đơn này không?');">
+
+                                    <input type="hidden"
+                                           name="id"
+                                           value="@item.MaDatPhong" />
+
+                                    <button type="submit"
+                                            class="btn btn-sm btn-danger">
+                                        Hủy
+                                    </button>
+
+                                </form>
+
+                            </div>
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

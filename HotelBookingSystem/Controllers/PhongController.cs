@@ -1,12 +1,14 @@
 ﻿using HotelBookingSystem.Data;
 using HotelBookingSystem.Models;
 using HotelBookingSystem.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotelBookingSystem.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PhongController : Controller
     {
         private readonly ApplicationDbContext _context;
