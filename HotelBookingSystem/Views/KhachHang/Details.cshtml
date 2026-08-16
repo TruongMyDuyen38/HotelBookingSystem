@@ -1,0 +1,88 @@
+﻿@model HotelBookingSystem.Models.KhachHang
+
+@{
+    ViewData["Title"] = "Chi tiết khách hàng";
+}
+
+<h2>Chi tiết khách hàng</h2>
+
+<div class="card mb-4">
+    <div class="card-body">
+
+        <p>
+            <strong>Mã khách hàng:</strong>
+            @Model.MaKhachHang
+        </p>
+
+        <p>
+            <strong>Họ tên:</strong>
+            @Model.HoTen
+        </p>
+
+        <p>
+            <strong>Email:</strong>
+            @Model.Email
+        </p>
+
+        <p>
+            <strong>Số điện thoại:</strong>
+            @Model.SoDienThoai
+        </p>
+
+        <p>
+            <strong>Tên đăng nhập:</strong>
+            @Model.TaiKhoan?.TenDangNhap
+        </p>
+
+    </div>
+</div>
+
+<h4>Lịch sử đặt phòng</h4>
+
+@if (Model.DatPhongs.Any())
+{
+    <table class="table table-bordered">
+
+        <thead>
+            <tr>
+                <th>Mã đặt phòng</th>
+                <th>Ngày đặt</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.DatPhongs)
+            {
+                <tr>
+                    <td>
+                        @item.MaDatPhong
+                    </td>
+
+                    <td>
+                        @item.NgayDat.ToString("dd/MM/yyyy HH:mm")
+                    </td>
+
+                    <td>
+                        @item.TongTien.ToString("N0") VNĐ
+                    </td>
+
+                    <td>
+                        @item.TrangThai
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+else
+{
+    <p>Khách hàng chưa có đơn đặt phòng nào.</p>
+}
+
+<a asp-action="Index"
+       class="btn btn-secondary">
+    Quay lại
+</a>

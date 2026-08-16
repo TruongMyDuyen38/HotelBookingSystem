@@ -1,0 +1,45 @@
+﻿@model IEnumerable<HotelBookingSystem.Models.KhachHang>
+
+@{
+    ViewData["Title"] = "Quản lý khách hàng";
+}
+
+<h2>Quản lý khách hàng</h2>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Mã KH</th>
+            <th>Họ tên</th>
+            <th>Email</th>
+            <th>Số điện thoại</th>
+            <th>Tên đăng nhập</th>
+            <th>Thao tác</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.MaKhachHang</td>
+
+                <td>@item.HoTen</td>
+
+                <td>@item.Email</td>
+
+                <td>@item.SoDienThoai</td>
+
+                <td>@item.TaiKhoan?.TenDangNhap</td>
+
+                <td>
+                    <a asp-action="Details"
+                           asp-route-id="@item.MaKhachHang"
+                           class="btn btn-sm btn-info">
+                        Chi tiết
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
