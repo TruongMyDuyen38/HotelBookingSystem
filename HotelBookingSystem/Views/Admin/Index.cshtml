@@ -1,7 +1,148 @@
 ﻿@{
-    ViewData["Title"] = "Quản trị";
+    ViewData["Title"] = "Dashboard";
+
+    int tongPhong = ViewBag.TongPhong;
+    int phongTrong = ViewBag.PhongTrong;
+    int phongDaDat = ViewBag.PhongDaDat;
+    int tongKhachHang = ViewBag.TongKhachHang;
+    int tongDonDatPhong = ViewBag.TongDonDatPhong;
+    int donChoXacNhan = ViewBag.DonChoXacNhan;
+    int donDaXacNhan = ViewBag.DonDaXacNhan;
+    int donDaHuy = ViewBag.DonDaHuy;
 }
 
-<h1>Trang quản trị</h1>
+<div class="container py-4">
 
-<p>Chào mừng Admin!</p>
+    <div class="mb-4">
+        <h1 class="fw-bold">Dashboard</h1>
+        <p class="text-muted mb-0">
+            Tổng quan hoạt động của HotelBookingSystem
+        </p>
+    </div>
+
+    <!-- Thống kê phòng -->
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Tổng số phòng</h6>
+                    <h2 class="fw-bold">@tongPhong</h2>
+                    <a asp-controller="Phong"
+                           asp-action="Index"
+                           class="btn btn-sm btn-outline-primary">
+                        Quản lý phòng
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Phòng trống</h6>
+                    <h2 class="fw-bold text-success">@phongTrong</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Phòng đã đặt</h6>
+                    <h2 class="fw-bold text-danger">@phongDaDat</h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Thống kê khách hàng + đặt phòng -->
+    <div class="row g-4 mb-4">
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Tổng khách hàng</h6>
+                    <h2 class="fw-bold">@tongKhachHang</h2>
+
+                    <a asp-controller="KhachHang"
+                           asp-action="Index"
+                           class="btn btn-sm btn-outline-primary">
+                        Quản lý khách hàng
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Tổng đơn đặt phòng</h6>
+                    <h2 class="fw-bold">@tongDonDatPhong</h2>
+
+                    <a asp-controller="DatPhong"
+                           asp-action="Index"
+                           class="btn btn-sm btn-outline-primary">
+                        Quản lý đặt phòng
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-body">
+                    <h6 class="text-muted">Đơn chờ xác nhận</h6>
+                    <h2 class="fw-bold text-warning">@donChoXacNhan</h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Trạng thái đơn đặt phòng -->
+    <div class="card shadow-sm border-0">
+
+        <div class="card-body">
+
+            <h4 class="fw-bold mb-4">
+                Trạng thái đơn đặt phòng
+            </h4>
+
+            <div class="row text-center">
+
+                <div class="col-md-4">
+                    <div class="p-3">
+                        <h5>Chờ xác nhận</h5>
+                        <h3 class="text-warning fw-bold">
+                            @donChoXacNhan
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-3">
+                        <h5>Đã xác nhận</h5>
+                        <h3 class="text-success fw-bold">
+                            @donDaXacNhan
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="p-3">
+                        <h5>Đã hủy</h5>
+                        <h3 class="text-danger fw-bold">
+                            @donDaHuy
+                        </h3>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
