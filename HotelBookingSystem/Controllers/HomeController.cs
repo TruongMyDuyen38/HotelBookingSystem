@@ -230,6 +230,7 @@ namespace HotelBookingSystem.Controllers
             var danhSachDatPhong = _context.DatPhongs
                 .Include(d => d.ChiTietDatPhongs)
                     .ThenInclude(c => c.Phong)
+                .Include(d => d.ThanhToans)
                 .Where(d => d.MaKhachHang == khachHang.MaKhachHang)
                 .OrderByDescending(d => d.NgayDat)
                 .ToList();

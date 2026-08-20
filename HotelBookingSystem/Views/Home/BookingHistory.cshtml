@@ -98,6 +98,28 @@
 
                                     </form>
                                 }
+
+                                @if (item.TrangThai == "Đã xác nhận")
+                                {
+                                    var daThanhToan = item.ThanhToans
+                                        .Any(t => t.TrangThai == "Đã thanh toán");
+
+                                    if (daThanhToan)
+                                    {
+                                        <span class="badge bg-success">
+                                            Đã thanh toán
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <a asp-controller="ThanhToan"
+                                               asp-action="Create"
+                                               asp-route-id="@item.MaDatPhong"
+                                               class="btn btn-sm btn-primary">
+                                            Thanh toán
+                                        </a>
+                                    }
+                                }
                             </td>
                         </tr>
                     }
